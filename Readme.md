@@ -36,7 +36,7 @@ Cynaptics-phase2 Induction task/
 
 1. **Clone the Repository**
     ```
-    git clone <your-repo-url>
+    git clone https://github.com/sairaj22019/Cynaptics-induction-Task-Court-Room-.git
     cd Cynaptics-phase2-Induction-task
     ```
 2. **Environment Variables**

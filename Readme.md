@@ -8,3 +8,48 @@ This project simulates a courtroom using multiple AI agents—Prosecution, Defen
 
 ## Directory Structure
 
+Cynaptics-phase2 Induction task/
+│
+├── Agents/
+│ ├── Defendent_Agent.py
+│ ├── EyeWitness_Agent.py
+│ ├── Judge_Agent.py
+│ ├── Lawyer_Agent.py
+│ ├── Main_Agent.py
+│ └── Plantiff_Agent.py
+│
+├── App/
+│ └── Streamlit.py
+│
+├── PROMPT/
+│ └── prompts.py
+│
+├── Court_Room.ipynb
+├── Cynaptics_data.csv
+├── .env
+├── .gitignore
+└── README.md
+
+
+
+## Setup Instructions
+
+1. **Clone the Repository**
+    ```
+    git clone <your-repo-url>
+    cd Cynaptics-phase2-Induction-task
+    ```
+2. **Environment Variables**
+    - Create a `.env` file in the root directory if not present.
+    - Add any necessary API keys or environment variables required for LLM access.
+  
+
+
+## Running the Demo
+
+### Option 1: Streamlit Web Interface
+
+cd App
+streamlit run Streamlit.py
+
+- Open the provided local URL in your browser to interact with the simulation.

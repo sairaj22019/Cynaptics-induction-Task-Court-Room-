@@ -7,7 +7,8 @@ This project simulates a courtroom using multiple AI agents—Prosecution, Defen
 ---
 
 ## Directory Structure
-![Directory Structure](Cynaptics-phase2 Induction task/Directory_structure.png)
+![Directory Structure](Cynaptics-phase2%20Induction%20task/Directory_structure.png)
+
 
 
 

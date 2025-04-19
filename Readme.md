@@ -34,3 +34,6 @@ cd App
 streamlit run Streamlit.py
 
 - Open the provided local URL in your browser to interact with the simulation.
+
+## User Interface
+![UI](UI.png)

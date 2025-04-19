@@ -6,8 +6,6 @@ ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ROOT_DIR)
 
 
-
-
 from PROMPT.prompts import (DEFENSE_SYSTEM, PROSECUTION_SYSTEM, DEFENDANT_PROMPT, PLAINTIFF_PROMPT, JUDGE_PROMPT)
 from Agents.Lawyer_Agent import LawyerAgent
 from Agents.Defendent_Agent import DefendantAgent
@@ -21,7 +19,7 @@ model = "microsoft/Phi-3-mini-4k-instruct"
 
 
 
-
+# give case background and eye witness details
 case_background = st.text_area(
     "Case Background",
     value="The State alleges that John Doe stole proprietary algorithms from his former employer and used them at a competitor. The charge is felony theft of trade secrets. No physical evidence shows direct copying, but server logs indicate large downloads two days before Doe resigned."
@@ -38,14 +36,12 @@ if st.button("Run Trial"):
     defendant = DefendantAgent(model=model, token=token, system_prompt=DEFENDANT_PROMPT)
     plaintiff = PlaintiffAgent(model=model, token=token, system_prompt=PLAINTIFF_PROMPT)
     judge = JudgeAgent(model=model, token=token, system_prompt=JUDGE_PROMPT)
-
     st.subheader("Opening Statements")
-    st.markdown(f"**Prosecution:** {prosecution.respond(f'Opening statement: {case_background}')}")
+    st.markdown(f"**Prosecution:** {prosecution.respond(f'Opening statement:{case_background}')}")
     st.markdown(f"**Defense:** {defense.respond('Opening statement responding to prosecution')}")
 
     st.subheader("Plaintiff Testimony")
     st.markdown(f"**Plaintiff:** {plaintiff.statement()}")
-
     if eyewitness_details.strip():
         eyewitness = EyewitnessAgent("Witness", eyewitness_details, model, token)
         st.subheader("Eyewitness Testimony")

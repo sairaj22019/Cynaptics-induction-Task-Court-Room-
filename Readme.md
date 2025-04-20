@@ -28,7 +28,7 @@ This project simulates a courtroom using multiple AI agents—Prosecution, Defen
 
 ## Running the Demo
 
-### Option 1: Jupyter Notebook
+### Option 1: Jupyter Notebook(Preffered)
 Open cynaptics.ipynb notebook file in Jupyter Notebook, JupyterLab, or VS Code.
 
 Run each cell consecutively from top to bottom to execute the simulation and view outputs inline.

@@ -4,9 +4,13 @@ from dotenv import load_dotenv
 import sys
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ROOT_DIR)
+import re
+def sanitize(text):
+    return re.sub(r'[^\x00-\x7F]+',' ', text)
 
 
-from PROMPT.prompts import (DEFENSE_SYSTEM, PROSECUTION_SYSTEM, DEFENDANT_PROMPT, PLAINTIFF_PROMPT, JUDGE_PROMPT)
+
+from PROMPT.prompts import (DEFENSE_SYSTEM, PROSECUTION_SYSTEM, DEFENDANT_PROMPT, PLAINTIFF_PROMPT)
 from Agents.Lawyer_Agent import LawyerAgent
 from Agents.Defendent_Agent import DefendantAgent
 from Agents.Plantiff_Agent import PlaintiffAgent
@@ -30,12 +34,17 @@ eyewitness_details = st.text_area(
 )
 
 if st.button("Run Trial"):
-    # Initialize agents
+    # initialize agents
     defense = LawyerAgent("Defense", DEFENSE_SYSTEM)
     prosecution = LawyerAgent("Prosecution", PROSECUTION_SYSTEM)
     defendant = DefendantAgent(model=model, token=token, system_prompt=DEFENDANT_PROMPT)
     plaintiff = PlaintiffAgent(model=model, token=token, system_prompt=PLAINTIFF_PROMPT)
-    judge = JudgeAgent(model=model, token=token, system_prompt=JUDGE_PROMPT)
+    judge = JudgeAgent(
+    model=model,
+    token=token,
+    case_background=sanitize(case_background),  # Remove special chars
+    eyewitness_details=sanitize(eyewitness_details)
+)
     st.subheader("Opening Statements")
     st.markdown(f"**Prosecution:** {prosecution.respond(f'Opening statement:{case_background}')}")
     st.markdown(f"**Defense:** {defense.respond('Opening statement responding to prosecution')}")
@@ -43,7 +52,7 @@ if st.button("Run Trial"):
     st.subheader("Plaintiff Testimony")
     st.markdown(f"**Plaintiff:** {plaintiff.statement()}")
     if eyewitness_details.strip():
-        eyewitness = EyewitnessAgent("Witness", eyewitness_details, model, token)
+        eyewitness = EyewitnessAgent("Sairaj",eyewitness_details, model, token)
         st.subheader("Eyewitness Testimony")
         st.markdown(f"**Eyewitness:** {eyewitness.testify()}")
 
@@ -55,7 +64,14 @@ if st.button("Run Trial"):
     st.markdown(f"**Defense:** {defense.respond('Final closing argument')}")
 
     st.subheader("Judge's Verdict")
-    st.markdown(f"**Judge:** {judge.verdict()}")
+    verdict = judge.verdict()
+    st.markdown(verdict)
+    if verdict == 1:
+        st.success("Judge's Verdict: 1 (Prosecution wins the case)")
+    elif verdict == 0:
+        st.success("Judge's Verdict: 0 (Defense wins the case)")
+    else:
+        st.error("Judge's Verdict: Unparseable response - requires human review.")
 
 st.info("Edit the case background or eyewitness details and click 'Run Trial' to simulate a new scenario.")
 

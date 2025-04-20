@@ -33,8 +33,5 @@ PLAINTIFF_PROMPT = """
         Answer questions honestly and provide details about the incident.
         """
 
-JUDGE_PROMPT = """
-        You are the judge. Ensure fairness, rule on objections, explain the law, and make the final decision.
-        Remain impartial and base rulings on evidence and law.
-        """
+
 
